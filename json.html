@@ -1,0 +1,45 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            /*
+                Handle JSON
+                Handles a JSON string and passes it for itteration and alerting
+                Author: Matthew B Reid
+            */
+
+            HandleJSON = window.handleJSON || {};
+            (function($, HandleJSON) {
+                HandleJSON.Sys = {
+                    JSONdata: '[{"color": "red","value": "#f00"},{"color": "green","value": "#0f0"},{"color": "black","value": "#000"}]',
+                    init: function () {
+                        var _this = this;
+
+                        $(function () {
+                            _this.parseData(_this.JSONdata);
+                        });
+                    },
+                    parseData: function (data) {
+                        var _this = this,
+                            parsedData = $.parseJSON(data);
+
+                        $.each(parsedData, function (i, obj) {
+                            _this.alertPerson(obj);
+                        });
+                    },
+                    alertPerson: function (obj) {
+                        alert(obj.color + ' is ' + obj.value);
+                    }
+                }
+
+                HandleJSON.Sys.init();
+
+            }(window.jQuery, window.HandleJSON));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

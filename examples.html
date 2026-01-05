@@ -1,0 +1,89 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            /*
+                Examples
+                Author: Matthew B Reid
+            */
+
+            /* chaining function - page */
+            function chainFunction () {
+                $('#el')
+                    .css('color', 'blue')
+                    .addClass('active')
+                    .removeClass('inactive');
+            } 
+            
+            /* toggle function - page */
+            function toggleFunction () {
+                $('#btn').click(function() {
+                    $('#el').toggle();
+                });
+            }
+
+
+            /* changing css at the same time - page */
+            $('#el').css('background-color', '#FFFF00');
+            $('#el').css('border', '1px solid black');
+
+            var params = {'background-color': '#FFFF00', 'border': '1px solid black'};
+            $('#el').css(params);
+
+            $.ajax({
+                url: 'server.php',
+                type: 'POST',
+                data: { name: 'John', age: 30 },
+                dataType: 'json',
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/ajax/u.php",
+                data: {
+                    type: 'autocomplete-search',
+                    str : encodeURI(val)
+                },
+                beforeSend: function(){
+                    $("#contact-search-txt").css("background","#FFF url(/images/LoaderIcon.gif) no-repeat 165px");
+                },
+                success: function(html){
+                    $("#suggestion-box").show();
+                    
+                    $("#suggestion-box").html(html).promise().done(function () {
+                        $('.sugg').click(function () {
+                                $('#contact-search-txt').val($(this).attr('data-username'));
+                                $("#suggestion-box").hide();
+                        });
+                    });
+                    
+                    $("#contact-search-txt").css("background","#FFF");
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+
+        <div class="row">
+            <div class="col-12 my-3 text-center" style="margin: auto;">
+                <form class="form-inline" id="frmSearch" style="display: block;">
+                <i class="far fa-3x fa-address-book w-auto"></i>&nbsp;&nbsp;
+                <input class="ml-3 w-50" name="contactSearchTxt" id="contact-search-txt" type="text" placeholder="Search Contacts" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off"  />
+                <a href="#" id="add-request-btn" title="Add Request" class="btn btn-primary w-auto"><i class="far fa-3x fa-comments"></i></a>
+                </form>
+                <div id="suggestion-box"></div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
